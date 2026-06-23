@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal, Code, Cpu, FolderGit2, MessageSquareCode, Briefcase } from 'lucide-react';
+import { Menu, X, Terminal, Code, Cpu, FolderGit2, MessageSquareCode, Briefcase, FileDown } from 'lucide-react';
 
 interface NavItem {
   name: string;
@@ -86,6 +86,15 @@ export default function Navbar() {
               {item.name}
             </a>
           ))}
+          {/* Download CV CTA */}
+          <a
+            href="/Achal_Saxena_Resume.pdf"
+            download
+            className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-brand-cyan hover:bg-brand-cyan/90 text-brand-navy ml-2 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all duration-300"
+          >
+            <FileDown className="w-4 h-4" />
+            <span>Download CV</span>
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -117,6 +126,16 @@ export default function Navbar() {
                 <span>{item.name}</span>
               </a>
             ))}
+            
+            {/* Download CV Mobile Button */}
+            <a
+              href="/Achal_Saxena_Resume.pdf"
+              download
+              className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-base font-semibold bg-brand-cyan text-brand-navy hover:bg-brand-cyan/90 shadow-md transition-all duration-300 mt-2"
+            >
+              <FileDown className="w-5 h-5" />
+              <span>Download CV (ATS Friendly)</span>
+            </a>
           </div>
         </div>
       )}
