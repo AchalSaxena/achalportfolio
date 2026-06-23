@@ -102,7 +102,7 @@ export default function Hero() {
 
         {/* Catchy Subtitle */}
         <p className="text-slate-600 text-lg md:text-xl font-normal max-w-3xl mb-10 leading-relaxed">
-          Hi, I'm <strong className="text-brand-navy font-semibold">Achal Saxena</strong>. An IT Professional & Developer with 9+ years of experience delivering workflow automation, requirement analysis, and e-Governance platforms for Indian ministries and departments.
+          Hi, I'm <strong className="text-brand-navy font-semibold">Achal Saxena</strong>. An IT Professional & Developer with 10 years of experience delivering workflow automation, requirement analysis, and e-Governance platforms for Indian ministries and departments.
         </p>
 
         {/* Interactive call to actions */}

@@ -24,7 +24,7 @@ export default function About() {
   ];
 
   const stats = [
-    { count: '9+ Yrs', label: 'E-Gov & IT Experience', icon: <Award className="w-5 h-5 text-brand-cyan" /> },
+    { count: '10 Yrs', label: 'E-Gov & IT Experience', icon: <Award className="w-5 h-5 text-brand-cyan" /> },
     { count: '60%', label: 'Manual Effort Reduced', icon: <Milestone className="w-5 h-5 text-brand-cyan" /> },
     { count: '99.9%', label: 'System Uptime Maintained', icon: <Cpu className="w-5 h-5 text-brand-cyan" /> },
   ];
@@ -42,10 +42,10 @@ export default function About() {
     <section id="about" className="py-24 px-4 md:px-8 max-w-6xl mx-auto border-b border-light-border">
       <div className="text-center mb-16">
         <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-brand-navy mb-4">
-          Consulting Bio & <span className="text-gradient">GovTech Stack</span>
+          IT Consulting & <span className="text-gradient">GovTech Stack</span>
         </h2>
         <p className="text-slate-500 text-base max-w-xl mx-auto">
-          9+ years of driving digital transformation initiatives, custom enterprise applications, and secure systems in the public sector.
+          10 years of driving digital transformation initiatives, custom enterprise applications, and secure systems in the public sector.
         </p>
       </div>
 
