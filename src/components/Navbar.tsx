@@ -88,7 +88,7 @@ export default function Navbar() {
           ))}
           {/* Download CV CTA */}
           <a
-            href="/Achal_Saxena_Resume.pdf"
+            href="/Achal_Saxena_CV.docx"
             download
             className="flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold bg-brand-cyan hover:bg-brand-cyan/90 text-brand-navy ml-2 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all duration-300"
           >
@@ -129,7 +129,7 @@ export default function Navbar() {
             
             {/* Download CV Mobile Button */}
             <a
-              href="/Achal_Saxena_Resume.pdf"
+              href="/Achal_Saxena_CV.docx"
               download
               className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl text-base font-semibold bg-brand-cyan text-brand-navy hover:bg-brand-cyan/90 shadow-md transition-all duration-300 mt-2"
             >
