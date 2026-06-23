@@ -1,0 +1,8 @@
+# Mark PDF and other binary files so Git never touches their line endings
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg text
