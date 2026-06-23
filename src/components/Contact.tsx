@@ -79,6 +79,46 @@ export default function Contact() {
     }, 800);
   };
 
+  const handleWhatsAppSend = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({ type: 'error', text: 'Please fill in all required fields (*) before sending via WhatsApp.' });
+      return;
+    }
+
+    setLoading(true);
+    setStatus(null);
+
+    // Save to Supabase first if configured, so we keep a copy of their message
+    if (isSupabaseConfigured && supabase) {
+      try {
+        await supabase.from('contact_messages').insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject || 'WhatsApp Contact',
+            message: formData.message,
+          },
+        ]);
+      } catch (err) {
+        console.error('Error saving to database before WhatsApp redirect:', err);
+      }
+    }
+
+    const whatsappNumber = '918305014100';
+    const text = `Hi Achal,\n\nMy Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject || 'Portfolio Query'}\n\nMessage:\n${formData.message}`;
+    const encodedText = encodeURIComponent(text);
+    
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedText}`, '_blank');
+    
+    setLoading(false);
+    setStatus({
+      type: 'success',
+      text: 'Message recorded! Opening WhatsApp to send your message...',
+    });
+    setFormData({ name: '', email: '', subject: '', message: '' });
+  };
+
   return (
     <section id="contact" className="py-24 px-4 md:px-8 max-w-6xl mx-auto">
       <div className="text-center mb-16">
@@ -123,6 +163,27 @@ export default function Contact() {
                 <div>
                   <div className="text-xs text-slate-400 font-bold uppercase tracking-wider font-mono">Phone Numbers</div>
                   <div className="text-sm font-semibold text-brand-slate">+91 8305014100 / 8770077139</div>
+                </div>
+              </a>
+
+              <a
+                href="https://wa.me/918305014100?text=Hi%20Achal,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect."
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-4 bg-slate-50 border border-light-border p-4 rounded-xl hover:border-brand-cyan/40 hover:bg-slate-100/50 transition-all duration-300 group"
+              >
+                <div className="p-2.5 rounded-lg bg-white border border-light-border text-emerald-600 group-hover:scale-105 transition-transform shadow-sm">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.858.002-2.634-1.02-5.11-2.881-6.973-1.861-1.863-4.337-2.887-6.971-2.888-5.442 0-9.866 4.42-9.87 9.86-.001 1.777.472 3.511 1.371 5.048L1.171 22.54l4.57-1.198c-.011.008.906-.518.906-.518zm10.967-7.461c-.301-.15-1.779-.877-2.046-.975-.267-.098-.463-.147-.659.15-.196.297-.759.975-.93 1.17-.172.196-.344.22-.645.07-1.129-.566-1.89-1.002-2.645-2.298-.192-.329.192-.305.549-1.018.06-.12.03-.225-.015-.315-.045-.09-.463-1.117-.635-1.529-.168-.402-.336-.347-.463-.353-.119-.006-.256-.007-.393-.007-.137 0-.36.051-.548.257-.188.206-.718.702-.718 1.71 0 1.009.734 1.984.836 2.12.102.137 1.445 2.206 3.5 3.093.489.211.87.337 1.168.431.492.156.94.134 1.294.081.395-.06 1.779-.727 2.03-1.425.252-.699.252-1.299.176-1.424-.075-.125-.27-.196-.57-.346z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-400 font-bold uppercase tracking-wider font-mono">WhatsApp Connect</div>
+                  <div className="text-sm font-semibold text-brand-slate">Chat on WhatsApp</div>
                 </div>
               </a>
 
@@ -272,23 +333,41 @@ export default function Contact() {
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-navy to-brand-slate hover:opacity-95 disabled:opacity-50 text-white font-semibold py-3.5 rounded-xl shadow-[0_4px_15px_rgba(15,23,42,0.15)] hover:shadow-[0_4px_20px_rgba(15,23,42,0.2)] transition-all duration-300 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Saving to database...</span>
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  <span>Send Message</span>
-                </>
-              )}
-            </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-brand-navy to-brand-slate hover:opacity-95 disabled:opacity-50 text-white font-semibold py-3.5 rounded-xl shadow-[0_4px_15px_rgba(15,23,42,0.15)] transition-all duration-300 disabled:cursor-not-allowed w-full"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Saving...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Send Message</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleWhatsAppSend}
+                disabled={loading}
+                className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold py-3.5 rounded-xl shadow-[0_4px_15px_rgba(16,185,129,0.15)] hover:shadow-[0_4px_20px_rgba(16,185,129,0.25)] transition-all duration-300 w-full"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.858.002-2.634-1.02-5.11-2.881-6.973-1.861-1.863-4.337-2.887-6.971-2.888-5.442 0-9.866 4.42-9.87 9.86-.001 1.777.472 3.511 1.371 5.048L1.171 22.54l4.57-1.198c-.011.008.906-.518.906-.518zm10.967-7.461c-.301-.15-1.779-.877-2.046-.975-.267-.098-.463-.147-.659.15-.196.297-.759.975-.93 1.17-.172.196-.344.22-.645.07-1.129-.566-1.89-1.002-2.645-2.298-.192-.329.192-.305.549-1.018.06-.12.03-.225-.015-.315-.045-.09-.463-1.117-.635-1.529-.168-.402-.336-.347-.463-.353-.119-.006-.256-.007-.393-.007-.137 0-.36.051-.548.257-.188.206-.718.702-.718 1.71 0 1.009.734 1.984.836 2.12.102.137 1.445 2.206 3.5 3.093.489.211.87.337 1.168.431.492.156.94.134 1.294.081.395-.06 1.779-.727 2.03-1.425.252-.699.252-1.299.176-1.424-.075-.125-.27-.196-.57-.346z"/>
+                </svg>
+                <span>Send via WhatsApp</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

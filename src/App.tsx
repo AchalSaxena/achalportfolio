@@ -5,6 +5,7 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import ScrollToTop from './components/ScrollToTop';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import { Terminal, Heart } from 'lucide-react';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 
       {/* Pinned Scroll to Top trigger */}
       <ScrollToTop />
+      <FloatingWhatsApp />
 
       {/* Professional Footer (High Contrast) */}
       <footer className="border-t border-brand-slate/20 bg-brand-navy py-12 px-4 md:px-8 text-center relative z-10 text-slate-300">
